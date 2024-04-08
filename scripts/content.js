@@ -99,5 +99,54 @@ window.onload = function () {
 	col2Content.appendChild(ul);
 	col2.appendChild(col2Content);
 
+	var divClass = document.createElement("div");
+	divClass.innerHTML = "<h3>Danh sách lớp học</h3>";
+
+	function handleCourse(courseId) {
+		var ul = document.createElement("ul");
+		
+		classes.forEach(function (itemClass) {
+			var li = document.createElement("li");
+			li.className = "class--item";
+			if (itemClass.idCouse === courseId) {
+				var checkbox = document.createElement("input");
+				checkbox.type = "checkbox";
+				checkbox.value = itemClass.id;
+				checkbox.addEventListener("change", function (event) {
+	
+					// Loại bỏ chọn tất cả các checkbox khác
+					checkboxes.forEach(function (cb) {
+						if (cb !== checkbox) {
+							cb.checked = false;
+						}
+					});
+
+					console.log("ID của khóa học trước khi được chọn mới:", prevCheckedClassList);
+					if (event.target.checked) {
+						prevCheckedClassList = event.target.value;
+						
+					} else {
+						prevCheckedClassList = null;
+					}
+					console.log(prevCheckedClassList);
+				});
+
+
+				checkboxes.push(checkbox);
+
+				li.textContent = `Tên lớp: ${itemClass.name}, Mã lớp: ${itemClass.id}, Mã môn: ${itemClass.idCouse}`;
+				li.prepend(checkbox);
+				
+			}
+			ul.appendChild(li);
+
+		});
+		divClass.innerHTML = '<h3>Danh sách lớp học</h3>';
+		divClass.appendChild(ul);
+	}
+	
+	console.log(checkboxes);
+	col2Content.appendChild(divClass);
+
 	
 };
